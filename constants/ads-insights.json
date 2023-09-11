@@ -11,16 +11,25 @@
         "page_impressions_unique",
         "page_impressions_paid",
         "page_impressions_viral",
+        "page_impressions_organic",
         "page_engaged_users",
         "page_fans",
         "page_positive_feedback_by_type"
     ],
+    "fetchingApiName": "get-ad-campaigns",
     "insightsApiName": "page-insights",
     "stateName": "pageInsights",
     "sections": [
         {
-            "title": "Page Impressions",
+            "title": "Top level Metrics",
             "charts": [
+                {
+                    "id": 3,
+                    "metrics": ["page_impressions", "page_impressions_unique", "page_impressions_paid", "page_impressions_viral", "page_impressions_organic"],
+                    "type": "line",
+                    "title": "Page Impressions Per Type",
+                    "size": "big"
+                },
                 {
                     "id": 1,
                     "metrics": ["page_views_total"],
@@ -32,13 +41,6 @@
                     "metrics": ["page_consumptions"],
                     "type": "line",
                     "size": "small"
-                },
-                {
-                    "id": 3,
-                    "metrics": ["page_impressions", "page_impressions_unique", "page_impressions_paid", "page_impressions_viral", "page_impressions_organic"],
-                    "type": "line",
-                    "title": "Page Impressions Per Type",
-                    "size": "big"
                 }
             ]
         },
@@ -66,7 +68,7 @@
             ]
         },
         {
-            "title": "Feedback",
+            "title": "Campaigns",
             "charts": [
                 {
                     "id": 6,

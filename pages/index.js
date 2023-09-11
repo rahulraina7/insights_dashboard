@@ -8,6 +8,7 @@ import PageInsights from './page-insights';
 import VideoInsights from './video-insights';
 import ReelsInsights from './reels-insights';
 import InstagramInsights from './instagram-insights';
+import AdsInsights from './ads-insights';
 
 import { getLast30DaysInterval } from '../utils/date';
 
@@ -17,6 +18,7 @@ import reelsInsights from '../constants/reels-insights.json';
 import videoInsights from '../constants/video-insights.json';
 import instagramInsights from '../constants/instagram-insights.json';
 import instagramMediaInsights from '../constants/instagram-media-insights.json';
+import adsInsights from '../constants/ads-insights.json';
 
 import styles from '../styles/style.module.css';
 
@@ -46,6 +48,11 @@ const Home = () => {
       id: 'ig',
       title: 'Instagram Insights',
       component: <InstagramInsights/>
+    },
+    {
+      id: 'ads',
+      title: 'Ads Insights',
+      component: <AdsInsights/>
     }
   ];
 
@@ -111,6 +118,25 @@ const Home = () => {
     }
   };
 
+  const getCampaignsAndTheirInsights = async (insightsObj) => {
+    try {
+      const url = `${settings.backendUrl}/api/${insightsObj.fetchingApiName}`;
+      const res = await fetch(url);
+      const { data, error } = await res.json();
+
+      if (data) {
+        for (const media of data) {
+          getInsights(insightsObj, media);
+        }
+      } else if (error) {
+        dispatchError(error, insightsObj.stateName);
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const validateConfigFile = async (type) => {
     const url = `${settings.backendUrl}/api/validate-config-file?type=${type}`;
     const res = await fetch(url);
@@ -153,6 +179,9 @@ const Home = () => {
 
     // Load Instagram Media and their Insights
     getMediasAndTheirInsights(instagramMediaInsights);
+
+    // Load Ads Campaigns and their Insights
+    getCampaignsAndTheirInsights(adsInsights);
   }, [configFileErrors, configFileOptionalFieldsErrors]);
 
 
